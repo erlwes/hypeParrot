@@ -5,7 +5,11 @@
 
 
 if ($profileload) {
-    #It is highly recommended to dot-source party-parrot in your PowerShell-profile. Life quality will drastically imnprove. Instantly. Yes.
+    #It is highly recommended to dot-source party-parrot in your PowerShell-profile. Life quality will drastically improve. Instantly. Yes.
+    #1. Open PS-profile (notepad $profile)
+    #2. Paste dot-source this script with the profileLoad-parameter (. "$PSScriptRoot\hypeParrot.ps1" -loops 2 -profileLoad)
+    #3. Put this script in same folder as Microsoft.PowerShell_profile.ps1/profile.ps1. To see path, write $profile in PowerShell-console
+    
     Get-PSBreakpoint | Remove-PSBreakpoint
     [int]$loops = 2
     $global:reEvaluatedFrame = ("
