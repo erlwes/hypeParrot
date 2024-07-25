@@ -1,13 +1,14 @@
-﻿Param([int]$FrameDelay=100, [int]$loops=0, [switch]$profileload)
+Function Invoke-Parrot {
+  Param([int]$FrameDelay=100, [int]$loops=0, [switch]$profileload)
 
-#To avoid cursor blinking while rendering frames, we disable the cursor. Dont worry, it will return upon script exit :)
-[console]::CursorVisible = $false
+  #To avoid cursor blinking while rendering frames, we disable the cursor. Dont worry, it will return upon script exit :)
+  [console]::CursorVisible = $false
 
 
-if ($profileload) {
-    Get-PSBreakpoint | Remove-PSBreakpoint
-    [int]$loops = 2
-    $global:reEvaluatedFrame = ("
+  if ($profileload) {
+      Get-PSBreakpoint | Remove-PSBreakpoint
+      [int]$loops = 2
+      $global:reEvaluatedFrame = ("
                 .ckx;'........':c.                
              .,:c:::::oxxocoo::::,',.             
             .odc'..:lkkoolllllo;..;d,             
@@ -238,28 +239,28 @@ $Script:frames += ("
 cNd.........................................;lOc  
 ")
 
-#Add some colors to an array
-$colors = @(
-    'Green',
-    'Yellow',
-    'Red',
-    'Blue',
-    'Cyan',
-    'Magenta',
-    'White'
-)
+    #Add some colors to an array
+    $colors = @(
+        'Green',
+        'Yellow',
+        'Red',
+        'Blue',
+        'Cyan',
+        'Magenta',
+        'White'
+    )
 
-#Taking note of the cursor position when script is started. We need to move the cursor back to this position before printing each ASCII frame (overwrite)
-$curCursorPos = New-Object System.Management.Automation.Host.Coordinates
-$curCursorPos.X = $host.ui.rawui.CursorPosition.X
-$curCursorPos.Y = $host.ui.rawui.CursorPosition.Y
+    #Taking note of the cursor position when script is started. We need to move the cursor back to this position before printing each ASCII frame (overwrite)
+    $curCursorPos = New-Object System.Management.Automation.Host.Coordinates
+    $curCursorPos.X = $host.ui.rawui.CursorPosition.X
+    $curCursorPos.Y = $host.ui.rawui.CursorPosition.Y
 
-$frameCount = 0
-$timesLooped = 0
+    $frameCount = 0
+    $timesLooped = 0
 
-#Loop of infinite party!
-while ($timesLooped -le $loops -or $loops -eq 0) {
-    
+    #Loop of infinite party!
+    while ($timesLooped -le $loops -or $loops -eq 0) {
+      
     #Reset cursor position, so that last frame will be replaced by new one
     $host.ui.rawui.CursorPosition = $curCursorPos            
     
@@ -284,4 +285,5 @@ while ($timesLooped -le $loops -or $loops -eq 0) {
         #Increase number of times played, in case the loop-parameter has been used, so that we can stop after the correct number of playthrougs
         $timesLooped++
     }
+  }
 }
